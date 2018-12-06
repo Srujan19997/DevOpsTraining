@@ -1,0 +1,44 @@
+
+//creating account and resource group
+login-azureRmaccount
+Get-AzureRmContext
+Get-AzureRmLocation | select Location 
+$location = "centralus"
+$resourceGroup = "storage"
+New-AzureRmResourceGroup -Name $resourceGroup -Location $location 
+
+//creating storage account
+$storageAccountName = "storage19997"
+$skuName = "Standard_LRS"
+$storageAccount = New-AzureRmStorageAccount -ResourceGroupName $resourceGroup `
+  -Name $storageAccountName `
+  -Location $location `
+  -SkuName $skuName
+//Creating new directory
+New-AzureStorageDirectory `
+   -Context $storageAccount.Context `
+   -ShareName "sharedfiles" `
+   -Path "myDirectory"
+
+//Uploading files to storage account
+Get-Date | Out-File -FilePath "C:\Users\Srujan.Goregey\Documents\Ps\FizzBuzz.ps1" -Force
+Set-AzureStorageFileContent `
+   -Context $storageAccount.Context `
+   -ShareName "sharedfiles" `
+   -Source "C:\Users\Srujan.Goregey\Documents\Ps\FizzBuzz.ps1" `
+   -Path "myDirectory\FizzBuzz.ps1"
+
+//Delting file from local directory
+Remove-Item 
+    `-Path "C:\Users\Srujan.Goregey\Documents\Ps\FizzBuzz.ps1" `
+     -Force `
+     -ErrorAction SilentlyContinue
+
+//Downloading
+Get-AzureStorageFileContent `
+    -Context $storageAccount.Context `
+    -ShareName "sharedfiles" `
+    -Path "myDirectory\FizzBuzz.ps1" `
+    -Destination "C:\Users\Srujan.Goregey\Documents\Ps"
+
+
