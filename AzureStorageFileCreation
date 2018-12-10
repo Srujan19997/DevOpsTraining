@@ -1,7 +1,7 @@
 
 //creating account and resource group
 login-azureRmaccount
-Get-AzureRmContext
+Set-AzureRmContext -SubscriptionName "Free Trial"
 Get-AzureRmLocation | select Location 
 $location = "centralus"
 $resourceGroup = "storage"
