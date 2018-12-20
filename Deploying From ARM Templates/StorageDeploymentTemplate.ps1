@@ -11,3 +11,5 @@ $New-AzureRmResourceGroup -Name StorageTemplateTest  -Location "East US"
 
 //Testing a template
 $Test-AzureRmResourceGroupDeployment -ResourceGroupName StorageTemplateTest -TemplateFile C:\Users\Srujan.Goregey\Desktop\Notes\json\azureStorageTemplate.json  -debug
+
+New-AzureRmResourceGroupDeployment  -ResourceGroupName StorageTemplateTest -TemplateFile C:\Users\Srujan.Goregey\Desktop\Notes\json\azureStorageTemplate.json
